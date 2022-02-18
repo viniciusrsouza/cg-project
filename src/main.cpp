@@ -4,65 +4,50 @@
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
 #endif
+
+#include <window/buffered_pane.h>
+
 class MyApp : public wxApp
 {
-public:
-  virtual bool OnInit();
-};
-class MyFrame : public wxFrame
-{
-public:
-  MyFrame(const wxString &title, const wxPoint &pos, const wxSize &size);
+  bool OnInit();
 
-private:
-  void OnHello(wxCommandEvent &event);
-  void OnExit(wxCommandEvent &event);
-  void OnAbout(wxCommandEvent &event);
-  wxDECLARE_EVENT_TABLE();
+  wxFrame *frame;
+  BasicDrawPane *drawPane;
+
+public:
 };
-enum
-{
-  ID_Hello = 1
-};
-wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
-    EVT_MENU(ID_Hello, MyFrame::OnHello)
-        EVT_MENU(wxID_EXIT, MyFrame::OnExit)
-            EVT_MENU(wxID_ABOUT, MyFrame::OnAbout)
-                wxEND_EVENT_TABLE()
-                    wxIMPLEMENT_APP(MyApp);
+
+IMPLEMENT_APP(MyApp)
+
 bool MyApp::OnInit()
 {
-  MyFrame *frame = new MyFrame("Hello World", wxPoint(50, 50), wxSize(450, 340));
-  frame->Show(true);
+  wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+  frame = new wxFrame((wxFrame *)NULL, -1, wxT("Hello wxDC"), wxPoint(50, 50), wxSize(800, 600));
+
+  drawPane = new BasicDrawPane((wxFrame *)frame);
+  sizer->Add(drawPane, 1, wxEXPAND);
+
+  frame->SetSizer(sizer);
+  frame->SetAutoLayout(true);
+
+  frame->Show();
   return true;
 }
-MyFrame::MyFrame(const wxString &title, const wxPoint &pos, const wxSize &size)
-    : wxFrame(NULL, wxID_ANY, title, pos, size)
-{
-  wxMenu *menuFile = new wxMenu;
-  menuFile->Append(ID_Hello, "&Hello...\tCtrl-H",
-                   "Help string shown in status bar for this menu item");
-  menuFile->AppendSeparator();
-  menuFile->Append(wxID_EXIT);
-  wxMenu *menuHelp = new wxMenu;
-  menuHelp->Append(wxID_ABOUT);
-  wxMenuBar *menuBar = new wxMenuBar;
-  menuBar->Append(menuFile, "&File");
-  menuBar->Append(menuHelp, "&Help");
-  SetMenuBar(menuBar);
-  CreateStatusBar();
-  SetStatusText("Welcome to wxWidgets!");
-}
-void MyFrame::OnExit(wxCommandEvent &event)
-{
-  Close(true);
-}
-void MyFrame::OnAbout(wxCommandEvent &event)
-{
-  wxMessageBox("This is a wxWidgets' Hello world sample",
-               "About Hello World", wxOK | wxICON_INFORMATION);
-}
-void MyFrame::OnHello(wxCommandEvent &event)
-{
-  wxLogMessage("Hello world from wxWidgets!");
-}
+
+BEGIN_EVENT_TABLE(BasicDrawPane, wxPanel)
+// some useful events
+/*
+ EVT_MOTION(BasicDrawPane::mouseMoved)
+ EVT_LEFT_DOWN(BasicDrawPane::mouseDown)
+ EVT_LEFT_UP(BasicDrawPane::mouseReleased)
+ EVT_RIGHT_DOWN(BasicDrawPane::rightClick)
+ EVT_LEAVE_WINDOW(BasicDrawPane::mouseLeftWindow)
+ EVT_KEY_DOWN(BasicDrawPane::keyPressed)
+ EVT_KEY_UP(BasicDrawPane::keyReleased)
+ EVT_MOUSEWHEEL(BasicDrawPane::mouseWheelMoved)
+ */
+
+// catch paint events
+EVT_PAINT(BasicDrawPane::paintEvent)
+
+END_EVENT_TABLE()
