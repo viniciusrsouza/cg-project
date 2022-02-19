@@ -7,6 +7,7 @@ add_custom_target(run
                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                    )
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 project(cg VERSION 1.0)
 
 add_subdirectory(lib/wxWidgets)
