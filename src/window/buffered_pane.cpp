@@ -76,6 +76,21 @@ void BaseBufferedPane::SizeEvent(wxSizeEvent &evt)
                     500);
 }
 
+void BaseBufferedPane::KeyDownEvent(wxKeyEvent &evt)
+{
+  switch (evt.GetKeyCode())
+  {
+  case WXK_ESCAPE:
+    wxTheApp->ExitMainLoop();
+    break;
+  case (int)'R':
+    Update();
+    break;
+  default:
+    break;
+  }
+}
+
 /*
  * Can be called to force a repaint of the window.
  */

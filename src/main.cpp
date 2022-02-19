@@ -81,5 +81,6 @@ BEGIN_EVENT_TABLE(BaseBufferedPane, wxPanel)
 // catch paint events
 EVT_PAINT(MyPane::PaintEvent)
 EVT_SIZE(MyPane::SizeEvent)
+EVT_KEY_DOWN(MyPane::KeyDownEvent)
 
 END_EVENT_TABLE()

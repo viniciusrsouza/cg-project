@@ -13,6 +13,7 @@ public:
 
   void PaintEvent(wxPaintEvent &evt);
   void SizeEvent(wxSizeEvent &evt);
+  void KeyDownEvent(wxKeyEvent &evt);
   void PaintNow();
 
   virtual void Render(uint8_t *buffer, int size);
