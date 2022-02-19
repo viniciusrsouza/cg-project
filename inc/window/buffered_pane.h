@@ -1,18 +1,21 @@
 #pragma once
 
-#include "wx/wx.h"
-#include "wx/sizer.h"
+#include <wx/wx.h>
+#include <wx/sizer.h>
 
-class BasicDrawPane : public wxPanel
+#include <utils/timer.h>
+
+class BaseBufferedPane : public wxPanel
 {
 
 public:
-  BasicDrawPane(wxFrame *parent);
+  BaseBufferedPane(wxFrame *parent);
 
-  void paintEvent(wxPaintEvent &evt);
-  void paintNow();
+  void PaintEvent(wxPaintEvent &evt);
+  void SizeEvent(wxSizeEvent &evt);
+  void PaintNow();
 
-  void render(wxDC &dc);
+  virtual void Render(uint8_t *buffer, int size);
 
   // some useful events
   /*
@@ -27,4 +30,16 @@ public:
    */
 
   DECLARE_EVENT_TABLE()
+private:
+  uint8_t *frontBuffer;
+  uint8_t *backBuffer;
+  uint8_t *blankBuffer;
+  Timer *timer;
+  bool resizing = false;
+
+  void DispatchPaint();
+  void SwapBuffers();
+  void PerformPaint(wxDC &dc);
+  void InitBuffers();
+  int GetBufferSize();
 };

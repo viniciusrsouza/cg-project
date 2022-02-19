@@ -1,19 +1,40 @@
 #include <window/buffered_pane.h>
+#include <utils/timer.h>
+#include <cstdlib>
+#include <iostream>
 
 // some useful events
 /*
- void BasicDrawPane::mouseMoved(wxMouseEvent& event) {}
- void BasicDrawPane::mouseDown(wxMouseEvent& event) {}
- void BasicDrawPane::mouseWheelMoved(wxMouseEvent& event) {}
- void BasicDrawPane::mouseReleased(wxMouseEvent& event) {}
- void BasicDrawPane::rightClick(wxMouseEvent& event) {}
- void BasicDrawPane::mouseLeftWindow(wxMouseEvent& event) {}
- void BasicDrawPane::keyPressed(wxKeyEvent& event) {}
- void BasicDrawPane::keyReleased(wxKeyEvent& event) {}
+ void BaseBufferedPane::mouseMoved(wxMouseEvent& event) {}
+ void BaseBufferedPane::mouseDown(wxMouseEvent& event) {}
+ void BaseBufferedPane::mouseWheelMoved(wxMouseEvent& event) {}
+ void BaseBufferedPane::mouseReleased(wxMouseEvent& event) {}
+ void BaseBufferedPane::rightClick(wxMouseEvent& event) {}
+ void BaseBufferedPane::mouseLeftWindow(wxMouseEvent& event) {}
+ void BaseBufferedPane::keyPressed(wxKeyEvent& event) {}
+ void BaseBufferedPane::keyReleased(wxKeyEvent& event) {}
  */
 
-BasicDrawPane::BasicDrawPane(wxFrame *parent) : wxPanel(parent)
+BaseBufferedPane::BaseBufferedPane(wxFrame *parent) : wxPanel(parent)
 {
+  InitBuffers();
+  timer = new Timer();
+}
+
+void BaseBufferedPane::InitBuffers()
+{
+  uint8_t *oldBack = backBuffer;
+  uint8_t *oldFront = frontBuffer;
+
+  backBuffer = (uint8_t *)malloc(GetBufferSize());
+  frontBuffer = (uint8_t *)malloc(GetBufferSize());
+  blankBuffer = (uint8_t *)malloc(GetBufferSize());
+  memset(blankBuffer, 0, GetBufferSize());
+
+  if (oldBack != NULL)
+    free(oldBack);
+  if (oldFront != NULL)
+    free(oldFront);
 }
 
 /*
@@ -22,53 +43,85 @@ BasicDrawPane::BasicDrawPane(wxFrame *parent) : wxPanel(parent)
  * calling Refresh()/Update().
  */
 
-void BasicDrawPane::paintEvent(wxPaintEvent &evt)
+void BaseBufferedPane::PaintEvent(wxPaintEvent &evt)
 {
   wxPaintDC dc(this);
-  render(dc);
+  PerformPaint(dc);
+}
+
+void BaseBufferedPane::DispatchPaint()
+{
+  resizing = false;
+  wxThreadEvent *evt = new wxThreadEvent();
+  evt->SetEventType(wxEVT_PAINT);
+  wxQueueEvent(this, evt);
+}
+
+/**
+ * @brief Called by the system of by wxWidgets when the panel size has changed.
+ * Reallocates buffers.
+ *
+ * @param evt
+ */
+void BaseBufferedPane::SizeEvent(wxSizeEvent &evt)
+{
+  resizing = true;
+  timer->Stop();
+  InitBuffers();
+
+  // delays paint event after resize to
+  // avoid running demanding render function.
+  timer->SetTimeout([this]()
+                    { DispatchPaint(); },
+                    500);
 }
 
 /*
- * Alternatively, you can use a clientDC to paint on the panel
- * at any time. Using this generally does not free you from
- * catching paint events, since it is possible that e.g. the window
- * manager throws away your drawing when the window comes to the
- * background, and expects you will redraw it when the window comes
- * back (by sending a paint event).
- *
- * In most cases, this will not be needed at all; simply handling
- * paint events and calling Refresh() when a refresh is needed
- * will do the job.
+ * Can be called to force a repaint of the window.
  */
-void BasicDrawPane::paintNow()
+void BaseBufferedPane::PaintNow()
 {
   wxClientDC dc(this);
-  render(dc);
+  PerformPaint(dc);
+}
+
+void BaseBufferedPane::PerformPaint(wxDC &dc)
+{
+  if (!resizing)
+  {
+    Render(backBuffer, GetBufferSize());
+    SwapBuffers();
+  }
+
+  uint8_t **buff = resizing ? &blankBuffer : &frontBuffer;
+  wxImage bitmap = wxImage(GetSize(), (unsigned char *)*buff, true);
+
+  dc.DrawBitmap(bitmap, 0, 0);
 }
 
 /*
- * Here we do the actual rendering. I put it in a separate
- * method so that it can work no matter what type of DC
- * (e.g. wxPaintDC or wxClientDC) is used.
+ * Debug implementation of virtual function. Derived class
+ * should override this method to draw the contents of the window.
  */
-void BasicDrawPane::render(wxDC &dc)
+void BaseBufferedPane::Render(uint8_t *buffer, int size)
 {
-  // draw some text
-  dc.DrawText(wxT("Testing"), 40, 60);
+  for (int i = 0; i < size; i += 3)
+  {
+    uint8_t color = 0xff * i / size;
+    buffer[i + 0] = 0x00;
+    buffer[i + 1] = 0x00;
+    buffer[i + 2] = 0xff;
+  }
+}
 
-  // draw a circle
-  dc.SetBrush(*wxGREEN_BRUSH);             // green filling
-  dc.SetPen(wxPen(wxColor(255, 0, 0), 5)); // 5-pixels-thick red outline
-  dc.DrawCircle(wxPoint(200, 100), 25 /* radius */);
+void BaseBufferedPane::SwapBuffers()
+{
+  uint8_t *tmp = frontBuffer;
+  frontBuffer = backBuffer;
+  backBuffer = tmp;
+}
 
-  // draw a rectangle
-  dc.SetBrush(*wxBLUE_BRUSH);                   // blue filling
-  dc.SetPen(wxPen(wxColor(255, 175, 175), 10)); // 10-pixels-thick pink outline
-  dc.DrawRectangle(300, 100, 400, 200);
-
-  // draw a line
-  dc.SetPen(wxPen(wxColor(0, 0, 0), 3)); // black line, 3 pixels thick
-  dc.DrawLine(300, 100, 700, 300);       // draw line across the rectangle
-
-  // Look at the wxDC docs to learn how to draw other stuff
+int BaseBufferedPane::GetBufferSize()
+{
+  return GetSize().GetWidth() * GetSize().GetHeight() * 3;
 }
