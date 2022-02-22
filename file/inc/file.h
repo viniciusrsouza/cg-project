@@ -18,6 +18,6 @@ public:
   int triangleCount;
   int vertexCount;
 
-  Vec3 *vertices;
+  vec3 *vertices;
   int *indices;
 };

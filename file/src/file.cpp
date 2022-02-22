@@ -5,6 +5,13 @@ File::File(std::string const &filename) : filename(filename)
 {
 }
 
+File::~File()
+{
+  delete[] vertices;
+  delete[] indices;
+  std::cout << "freeing file" << std::endl;
+}
+
 bool File::Load()
 {
   std::ifstream file(filename);
@@ -17,7 +24,7 @@ bool File::Load()
   std::string line;
   file >> vertexCount >> triangleCount;
 
-  vertices = new Vec3[vertexCount];
+  vertices = new vec3[vertexCount];
   indices = new int[triangleCount * 3];
 
   for (int i = 0; i < vertexCount; i++)

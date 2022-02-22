@@ -13,6 +13,8 @@ add_library(
   mathlib STATIC
   inc/vec3.h
   src/vec3.cpp
+  inc/mat3.h
+  src/mat3.cpp
 )
 
 target_include_directories(mathlib PUBLIC inc)
