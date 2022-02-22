@@ -8,6 +8,7 @@
 #include <window/buffered_pane.h>
 #include <iostream>
 #include <mathlib.h>
+#include <filelib.h>
 
 /**
  * height -> 0xff
@@ -24,6 +25,7 @@ public:
   MyPane(wxFrame *parent) : BaseBufferedPane(parent) {}
   void Render(uint8_t *buffer, int size) override
   {
+    std::cout << "Render" << std::endl;
     for (int i = 0; i < size; i += 3)
     {
       int line = (i / 3) / GetSize().GetWidth();
@@ -36,6 +38,24 @@ public:
       buffer[i + 1] = g_shade;
       buffer[i + 2] = b_shade;
     }
+  }
+
+  void KeyDown(int key) override
+  {
+    switch (key)
+    {
+    case (int)'R':
+      Reload();
+      break;
+    default:
+      break;
+    }
+  }
+
+  void Reload()
+  {
+    File *file = new File("assets/triangulo.byu");
+    file->Load();
   }
 };
 

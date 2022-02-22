@@ -23,18 +23,14 @@ BaseBufferedPane::BaseBufferedPane(wxFrame *parent) : wxPanel(parent)
 
 void BaseBufferedPane::InitBuffers()
 {
-  uint8_t *oldBack = backBuffer;
-  uint8_t *oldFront = frontBuffer;
+  free(frontBuffer);
+  free(backBuffer);
+  free(blankBuffer);
 
   backBuffer = (uint8_t *)malloc(GetBufferSize());
   frontBuffer = (uint8_t *)malloc(GetBufferSize());
   blankBuffer = (uint8_t *)malloc(GetBufferSize());
   memset(blankBuffer, 0, GetBufferSize());
-
-  if (oldBack != NULL)
-    free(oldBack);
-  if (oldFront != NULL)
-    free(oldFront);
 }
 
 /*
@@ -45,6 +41,7 @@ void BaseBufferedPane::InitBuffers()
 
 void BaseBufferedPane::PaintEvent(wxPaintEvent &evt)
 {
+  std::cout << "PaintEvent" << std::endl;
   wxPaintDC dc(this);
   PerformPaint(dc);
 }
@@ -84,11 +81,17 @@ void BaseBufferedPane::KeyDownEvent(wxKeyEvent &evt)
     wxTheApp->ExitMainLoop();
     break;
   case (int)'R':
-    Update();
+    PaintNow();
     break;
   default:
     break;
   }
+  KeyDown(evt.GetKeyCode());
+}
+
+void BaseBufferedPane::KeyDown(int key)
+{
+  // override
 }
 
 /*

@@ -12,9 +12,10 @@ project(cg VERSION 1.0)
 
 add_subdirectory(lib/wxWidgets)
 add_subdirectory(math)
+add_subdirectory(file)
 add_subdirectory(render)
 
 add_executable(cg ${CG_SRC})
 
 target_include_directories(cg PRIVATE ${CG_INC})
-target_link_libraries(cg mathlib wx::net wx::core wx::base)
+target_link_libraries(cg mathlib filelib wx::net wx::core wx::base)

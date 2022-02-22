@@ -17,6 +17,7 @@ public:
   void PaintNow();
 
   virtual void Render(uint8_t *buffer, int size);
+  virtual void KeyDown(int key);
 
   // some useful events
   /*
