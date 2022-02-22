@@ -15,3 +15,10 @@ Vec3::Vec3() : x(0), y(0), z(0)
 Vec3::~Vec3()
 {
 }
+
+// Operators
+std::ostream &operator<<(std::ostream &os, Vec3 const &v)
+{
+  os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+  return os;
+}

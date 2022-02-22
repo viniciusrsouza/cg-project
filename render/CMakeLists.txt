@@ -9,4 +9,4 @@ set(CG_INC
   ${CG_INC}
   ${CMAKE_CURRENT_SOURCE_DIR}/inc
   PARENT_SCOPE
-  )
+)

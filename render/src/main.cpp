@@ -7,6 +7,7 @@
 
 #include <window/buffered_pane.h>
 #include <iostream>
+#include <mathlib.h>
 
 /**
  * height -> 0xff
@@ -62,6 +63,10 @@ bool MyApp::OnInit()
   frame->SetAutoLayout(true);
 
   frame->Show();
+
+  Vec3 v = Vec3(1, 2, 3);
+  std::cout << "v: " << v << std::endl;
+
   return true;
 }
 

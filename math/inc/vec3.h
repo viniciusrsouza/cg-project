@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iostream>
 class Vec3
 {
 public:
@@ -7,6 +7,9 @@ public:
   Vec3(Vec3 const &v);
   Vec3();
   ~Vec3();
+
+  // operators
+  friend std::ostream &operator<<(std::ostream &os, Vec3 const &v);
 
   float x, y, z;
 };

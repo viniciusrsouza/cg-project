@@ -7,16 +7,17 @@ project(
   VERSION 1.0.0
   DESCRIPTION "linear algebra library"
   LANGUAGES CXX
-  )
+)
 
 add_library(
   mathlib STATIC
+  inc/vec3.h
   src/vec3.cpp
 )
 
-target_include_directories(mathlib PRIVATE inc)
+target_include_directories(mathlib PUBLIC inc)
 set_target_properties(mathlib PROPERTIES 
   VERSION ${PROJECT_VERSION}
   SOVERSION 1
-  PUBLIC_HEADER inc/mathlib.h
+  PUBLIC_HEADER mathlib.h
 )
