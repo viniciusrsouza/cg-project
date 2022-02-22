@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 
-#include "mat3.h"
 class vec3
 {
 public:
@@ -22,15 +21,16 @@ public:
   vec3 operator*(float s) const;
   vec3 operator/(float s) const;
 
-  vec3 operator*=(mat3 const &m);
-  vec3 operator*(mat3 const &m) const;
-
   vec3 cross(vec3 const &v) const;
   float dot(vec3 const &v) const;
 
   vec3 normalize() const;
   float length() const;
   float distance(vec3 const &v) const;
+
+  void set(float x, float y, float z);
+  void set(vec3 const &v);
+  void set(float s);
 
   void zero();
 

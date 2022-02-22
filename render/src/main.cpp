@@ -8,6 +8,8 @@
 #include <window/buffered_pane.h>
 #include <iostream>
 
+#include <math.h>
+
 #include <mathlib.h>
 #include <filelib.h>
 
@@ -59,19 +61,6 @@ public:
   {
     File *file = new File("assets/calice2.byu");
     file->Load();
-    mat3 m(1.0f);
-    mat3 m2(m);
-    mat3 m3(0.0f, 1.0f, 2.0f,
-            3.0f, 8.0f, 5.0f,
-            6.0f, 7.0f, 8.0f);
-
-    std::cout << m << std::endl;
-    std::cout << m2 << std::endl;
-    std::cout << m3 << std::endl;
-    std::cout << m2(1, 1) << std::endl;
-    std::cout << "det " << m3.determinant() << std::endl;
-    std::cout << "inv " << std::endl
-              << m3.inverse() << std::endl;
   }
 };
 

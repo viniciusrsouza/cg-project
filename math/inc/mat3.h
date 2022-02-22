@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 
+#include "vec3.h"
+
 class mat3
 {
 public:
@@ -26,8 +28,10 @@ public:
   mat3 operator*(float s) const;
   mat3 operator/(float s) const;
 
-  float &operator()(int i, int j);
-  float operator()(int i, int j) const;
+  vec3 operator*(const vec3 &v) const;
+
+  inline float &operator()(int i, int j);
+  inline float operator()(int i, int j) const;
 
   float *getPtr();
   const float *getPtr() const;

@@ -91,12 +91,12 @@ std::ostream &operator<<(std::ostream &os, const mat3 &m)
   return os;
 }
 
-float &mat3::operator()(int i, int j)
+inline float &mat3::operator()(int i, int j)
 {
   return m[i * 3 + j];
 }
 
-float mat3::operator()(int i, int j) const
+inline float mat3::operator()(int i, int j) const
 {
   return m[i * 3 + j];
 }
@@ -178,6 +178,14 @@ mat3 mat3::operator/(float s) const
   for (int i = 0; i < 9; i++)
     r.m[i] = this->m[i] / s;
   return r;
+}
+
+vec3 mat3::operator*(const vec3 &v) const
+{
+  float x = m[0] * v.x + m[1] * v.y + m[2] * v.z;
+  float y = m[3] * v.x + m[4] * v.y + m[5] * v.z;
+  float z = m[6] * v.x + m[7] * v.y + m[8] * v.z;
+  return vec3(x, y, z);
 }
 
 float *mat3::getPtr()
