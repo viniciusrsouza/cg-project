@@ -2,6 +2,8 @@ set(CG_SRC
   ${CG_SRC}
   ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/window/buffered_pane.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/context/context.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/context/camera.cpp
   PARENT_SCOPE
 )
 

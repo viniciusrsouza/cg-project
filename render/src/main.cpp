@@ -5,10 +5,11 @@
 #include <wx/wx.h>
 #endif
 
-#include <window/buffered_pane.h>
 #include <iostream>
-
 #include <math.h>
+
+#include <window/buffered_pane.h>
+#include <context/camera.h>
 
 #include <mathlib.h>
 #include <filelib.h>
@@ -61,6 +62,8 @@ public:
   {
     File *file = new File("assets/calice2.byu");
     file->Load();
+    Camera *c = Camera::FromFile("assets/camera.txt");
+    std::cout << *c << std::endl;
   }
 };
 
