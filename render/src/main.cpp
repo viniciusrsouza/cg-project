@@ -10,6 +10,7 @@
 
 #include <window/buffered_pane.h>
 #include <context/camera.h>
+#include <context/context.h>
 
 #include <mathlib.h>
 #include <filelib.h>
@@ -26,22 +27,14 @@
 class MyPane : public BaseBufferedPane
 {
 public:
+  Context *context = nullptr;
   MyPane(wxFrame *parent) : BaseBufferedPane(parent) {}
   void Render(uint8_t *buffer, int size) override
   {
+    if (context == nullptr)
+      return;
     std::cout << "Render" << std::endl;
-    for (int i = 0; i < size; i += 3)
-    {
-      int line = (i / 3) / GetSize().GetWidth();
-      int column = (i / 3) - line * GetSize().GetWidth();
-
-      uint8_t b_shade = 0xff * line / this->GetSize().GetHeight();
-      uint8_t g_shade = 0xff * column / this->GetSize().GetWidth();
-      uint8_t r_shade = 0xff * (this->GetSize().GetHeight() - line) / this->GetSize().GetHeight();
-      buffer[i + 0] = r_shade;
-      buffer[i + 1] = g_shade;
-      buffer[i + 2] = b_shade;
-    }
+    context->Render(buffer, size);
   }
 
   void KeyDown(int key) override
@@ -60,7 +53,7 @@ public:
 
   void Reload()
   {
-    File *file = new File("assets/calice2.byu");
+    File *file = new File("assets/triangulo.byu");
     file->Load();
     Camera *c = Camera::FromFile("assets/camera.txt");
     std::cout << *c << std::endl;
