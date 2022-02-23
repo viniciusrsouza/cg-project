@@ -53,10 +53,16 @@ public:
 
   void Reload()
   {
+    delete context;
+    context = new Context();
+
     File *file = new File("assets/triangulo.byu");
     file->Load();
     Camera *c = Camera::FromFile("assets/camera.txt");
-    std::cout << *c << std::endl;
+
+    context->Load(file->vertices, file->vertexCount, file->indices, file->triangleCount);
+    context->SetCamera(c);
+    std::cout << "Context loaded" << std::endl;
   }
 };
 

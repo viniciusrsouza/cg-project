@@ -17,15 +17,23 @@
 
 BaseBufferedPane::BaseBufferedPane(wxFrame *parent) : wxPanel(parent)
 {
+  backBuffer = nullptr;
+  frontBuffer = nullptr;
+  blankBuffer = nullptr;
   InitBuffers();
   timer = new Timer();
 }
 
 void BaseBufferedPane::InitBuffers()
 {
-  free(frontBuffer);
-  free(backBuffer);
-  free(blankBuffer);
+  std::cout << "InitBuffers - before" << std::endl;
+  if (backBuffer != nullptr)
+    free(backBuffer);
+  if (frontBuffer != nullptr)
+    free(frontBuffer);
+  if (blankBuffer != nullptr)
+    free(blankBuffer);
+  std::cout << "InitBuffers - after" << std::endl;
 
   backBuffer = (uint8_t *)malloc(GetBufferSize());
   frontBuffer = (uint8_t *)malloc(GetBufferSize());

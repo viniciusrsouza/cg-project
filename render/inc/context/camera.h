@@ -21,10 +21,15 @@ public:
   friend std::ostream &operator<<(std::ostream &os, Camera const &c);
 
 private:
+  void Init();
+
   vec3 N;
   vec3 V;
+  vec3 U;
   point C;
-  float d;
-  float hx;
-  float hy;
+  const float d;
+  const float hx;
+  const float hy;
+  const float dhx;
+  const float dhy;
 };

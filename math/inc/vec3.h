@@ -21,12 +21,14 @@ public:
   vec3 operator*(float s) const;
   vec3 operator/(float s) const;
 
+  // vec3 functions
   vec3 cross(vec3 const &v) const;
   float dot(vec3 const &v) const;
 
   vec3 normalize() const;
   float length() const;
   float distance(vec3 const &v) const;
+  vec3 project(vec3 const &v) const;
 
   void set(float x, float y, float z);
   void set(vec3 const &v);

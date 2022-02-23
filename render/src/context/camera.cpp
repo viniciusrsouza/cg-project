@@ -4,13 +4,27 @@
 
 Camera::Camera() : N(vec3(0, 1, -1)), V(vec3(0, -1, -1)),
                    d(5), hx(2), hy(2),
-                   C(point(0, -500, -500))
+                   C(point(0, -500, -500)),
+                   dhx(d / hx), dhy(d / hy)
 {
+  Init();
 }
 
-Camera::Camera(vec3 const &N, vec3 const &V, point const &C,
-               float d, float hx, float hy) : N(N), V(V), C(C), d(d), hx(hx), hy(hy)
+Camera::Camera(vec3 const &N, vec3 const &V,
+               point const &C,
+               float d, float hx, float hy)
+    : N(N), V(V), C(C),
+      d(d), hx(hx), hy(hy),
+      dhx(d / hx), dhy(d / hy)
 {
+  Init();
+}
+
+void Camera::Init()
+{
+  V = (V - V.project(N)).normalize();
+  N = N.normalize();
+  U = N.cross(V).normalize();
 }
 
 Camera::~Camera()
