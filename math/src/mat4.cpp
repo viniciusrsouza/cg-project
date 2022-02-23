@@ -2,7 +2,7 @@
 #include <mat3.h>
 
 // inline implementations
-inline void _multiply(const float *m1, const float *m2, mat4 *dest)
+inline void _multiply_4_4(const float *m1, const float *m2, mat4 *dest)
 {
   float result[16];
   for (int i = 0; i < 4; i++)
@@ -154,7 +154,7 @@ mat4 &mat4::operator-=(const mat4 &m)
 
 mat4 &mat4::operator*=(const mat4 &m)
 {
-  _multiply(this->m, m.getPtr(), this);
+  _multiply_4_4(this->m, m.getPtr(), this);
   return *this;
 }
 
@@ -191,7 +191,7 @@ mat4 mat4::operator-(const mat4 &m) const
 mat4 mat4::operator*(const mat4 &m) const
 {
   mat4 r;
-  _multiply(this->m, m.getPtr(), &r);
+  _multiply_4_4(this->m, m.getPtr(), &r);
   return r;
 }
 
@@ -213,10 +213,10 @@ mat4 mat4::operator/(float s) const
 
 vec4 mat4::operator*(const vec4 &v) const
 {
-  float x = v.x * m[0] + v.y * m[1] + v.z * m[2] + v.w * m[3];
-  float y = v.x * m[4] + v.y * m[5] + v.z * m[6] + v.w * m[7];
-  float z = v.x * m[8] + v.y * m[9] + v.z * m[10] + v.w * m[11];
-  float w = v.x * m[12] + v.y * m[13] + v.z * m[14] + v.w * m[15];
+  float x = v.x * m[0] + v.y * m[4] + v.z * m[8] + v.w * m[12];
+  float y = v.x * m[1] + v.y * m[5] + v.z * m[9] + v.w * m[13];
+  float z = v.x * m[2] + v.y * m[6] + v.z * m[10] + v.w * m[14];
+  float w = v.x * m[3] + v.y * m[7] + v.z * m[11] + v.w * m[15];
   return vec4(x, y, z, w);
 }
 

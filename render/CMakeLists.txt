@@ -5,6 +5,7 @@ set(CG_SRC
   ${CMAKE_CURRENT_SOURCE_DIR}/src/context/context.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/context/camera.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/context/shader.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/inc/shaders/basic_shader.h
   PARENT_SCOPE
 )
 

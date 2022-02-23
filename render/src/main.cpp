@@ -11,6 +11,7 @@
 #include <window/buffered_pane.h>
 #include <context/camera.h>
 #include <context/context.h>
+#include <shaders/basic_shader.h>
 
 #include <mathlib.h>
 #include <filelib.h>
@@ -62,6 +63,7 @@ public:
 
     context->Load(file->vertices, file->vertexCount, file->indices, file->triangleCount);
     context->SetCamera(c);
+    context->UseShader(new BasicShader());
     std::cout << "Context loaded" << std::endl;
   }
 };

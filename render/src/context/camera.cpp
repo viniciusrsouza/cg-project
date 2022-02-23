@@ -31,6 +31,23 @@ Camera::~Camera()
 {
 }
 
+mat4 Camera::GetViewMatrix() const
+{
+  point c = C * -1;
+  return mat4(U.x, V.x, N.x, 0,
+              U.y, V.y, N.y, 0,
+              U.z, V.z, N.z, 0,
+              c.x, c.y, c.z, 1);
+}
+
+mat4 Camera::GetPerspectiveMatrix() const
+{
+  return mat4(dhx, 0, 0, 0,
+              0, dhy, 0, 0,
+              0, 0, 1, 0,
+              0, 0, 0, 0);
+}
+
 // Parser for camera.txt
 inline vec3 *ParseVec3(std::string const &str)
 {

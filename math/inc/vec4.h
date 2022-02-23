@@ -1,11 +1,14 @@
 #pragma once
 #include <iostream>
+#include "vec3.h"
 
 class vec4
 {
 public:
   vec4(float x, float y, float z, float w);
   vec4(vec4 const &v);
+  vec4(vec3 const &v, float w = 0.0f);
+  vec4(float s);
   vec4();
   ~vec4();
 

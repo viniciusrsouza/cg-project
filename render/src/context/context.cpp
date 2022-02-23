@@ -44,15 +44,21 @@ void Context::Render(uint8_t *buffer, int size)
 {
   // clear buffer
   memset(buffer, 0, size);
+  mat4 view = camera->GetViewMatrix();
+  mat4 perspective = camera->GetPerspectiveMatrix();
 
-  mat4 m = mat4(0.0f, 1.0f, 4.0f, -1.0f,
-                9.0f, 2.0f, 7.0f, -3.0f,
-                8.0f, -4.0f, 2.0f, 1.0f,
-                3.0f, 0.0f, -2.0f, 0.0f);
-  m.transpose();
-  std::cout << "m = " << std::endl;
-  std::cout << m << std::endl;
+  if (shader == nullptr)
+    return;
 
-  float det = m.determinant();
-  std::cout << "det = " << det << std::endl;
+  mat4 m1;
+  m1.identity();
+  shader->Load(view, perspective, m1);
+
+  vec4 *t_vertices = new vec4[num_vertices];
+
+  for (int i = 0; i < num_vertices; i++)
+  {
+    t_vertices[i] = shader->Vertex(vertices[i]);
+    std::cout << "Vertex " << i << ": " << t_vertices[i] << std::endl;
+  }
 }

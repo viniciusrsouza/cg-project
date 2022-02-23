@@ -9,6 +9,14 @@ vec4::vec4(vec4 const &v) : x(v.x), y(v.y), z(v.z), w(v.w)
 {
 }
 
+vec4::vec4(vec3 const &v, float w) : x(v.x), y(v.y), z(v.z), w(w)
+{
+}
+
+vec4::vec4(float s) : x(s), y(s), z(s), w(s)
+{
+}
+
 vec4::vec4() : x(0), y(0), z(0), w(0)
 {
 }

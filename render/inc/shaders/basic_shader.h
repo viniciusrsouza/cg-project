@@ -3,14 +3,15 @@
 class BasicShader : public Shader
 {
 public:
-  BasicShader()
-  {
-  }
-  ~BasicShader()
-  {
-  }
+  BasicShader() : Shader() {}
+  ~BasicShader() {}
 
-  void Vertex(vec3 in) {}
+  vec4 Vertex(vec3 const &in)
+  {
+    vec4 v = view * vec4(in, 1.0f);
+    vec4 p = (perspective * v) / v.z;
+    return screen * p;
+  }
   vec3 Fragment()
   {
     return vec3(1.0f, 1.0f, 1.0f);

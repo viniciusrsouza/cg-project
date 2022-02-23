@@ -16,8 +16,10 @@ public:
          float d, float hx, float hy);
   ~Camera();
 
-  static Camera *FromFile(std::string const &filename);
+  mat4 GetViewMatrix() const;
+  mat4 GetPerspectiveMatrix() const;
 
+  static Camera *FromFile(std::string const &filename);
   friend std::ostream &operator<<(std::ostream &os, Camera const &c);
 
 private:
