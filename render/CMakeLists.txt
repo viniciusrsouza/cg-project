@@ -1,17 +1,15 @@
-set(CG_SRC
-  ${CG_SRC}
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/window/buffered_pane.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/context/context.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/context/camera.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/context/shader.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/context/render.cpp
+set(SRC
+  ${SRC}
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/context.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/camera.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/shader.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/render.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/inc/shaders/basic_shader.h
   PARENT_SCOPE
 )
 
-set(CG_INC
-  ${CG_INC}
+set(INC
+  ${INC}
   ${CMAKE_CURRENT_SOURCE_DIR}/inc
   PARENT_SCOPE
 )

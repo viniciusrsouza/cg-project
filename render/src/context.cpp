@@ -1,5 +1,5 @@
-#include <context/context.h>
-#include <context/render.h>
+#include <context.h>
+#include <render.h>
 #include <iostream>
 
 Context::Context()

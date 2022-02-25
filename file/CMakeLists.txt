@@ -11,7 +11,6 @@ project(
 
 add_library(
   filelib STATIC
-  inc/file.h
   src/file.cpp
 )
 

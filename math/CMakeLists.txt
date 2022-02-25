@@ -11,13 +11,9 @@ project(
 
 add_library(
   mathlib STATIC
-  inc/vec3.h
   src/vec3.cpp
-  inc/vec4.h
   src/vec4.cpp
-  inc/mat3.h
   src/mat3.cpp
-  inc/mat4.h
   src/mat4.cpp
 )
 

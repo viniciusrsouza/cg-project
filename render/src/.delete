@@ -57,7 +57,7 @@ public:
     delete context;
     context = new Context();
 
-    File *file = new File("assets/vaso.byu");
+    File *file = new File("assets/calice2.byu");
     file->Load();
 
     Camera *c = Camera::FromFile("assets/camera.txt");
@@ -86,7 +86,7 @@ IMPLEMENT_APP(MyApp)
 bool MyApp::OnInit()
 {
   wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
-  frame = new wxFrame((wxFrame *)NULL, -1, wxT("Hello wxDC"), wxPoint(50, 50), wxSize(500, 500));
+  frame = new wxFrame((wxFrame *)NULL, -1, wxT("CG Project"), wxPoint(50, 50), wxSize(500, 500));
 
   drawPane = new MyPane((wxFrame *)frame);
   sizer->Add(drawPane, 1, wxEXPAND);
