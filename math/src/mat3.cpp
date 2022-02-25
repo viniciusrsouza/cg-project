@@ -77,6 +77,13 @@ mat3::mat3(float m00, float m10, float m20,
       m02, m12, m22);
 }
 
+mat3::mat3(vec3 const &u, vec3 const &v, vec3 const &w)
+{
+  set(u.x, v.x, w.x,
+      u.y, v.y, w.y,
+      u.z, v.z, w.z);
+}
+
 mat3::~mat3()
 {
 }
@@ -85,9 +92,12 @@ mat3::~mat3()
 
 std::ostream &operator<<(std::ostream &os, const mat3 &m)
 {
-  os << "|" << m.m[0] << " " << m.m[1] << " " << m.m[2] << "|" << std::endl;
-  os << "|" << m.m[3] << " " << m.m[4] << " " << m.m[5] << "|" << std::endl;
-  os << "|" << m.m[6] << " " << m.m[7] << " " << m.m[8] << "|" << std::endl;
+  vec3 u(m(0, 0), m(0, 1), m(0, 2));
+  vec3 v(m(1, 0), m(1, 1), m(1, 2));
+  vec3 w(m(2, 0), m(2, 1), m(2, 2));
+  os << u << std::endl
+     << v << std::endl
+     << w << std::endl;
   return os;
 }
 

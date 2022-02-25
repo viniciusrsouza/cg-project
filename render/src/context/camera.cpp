@@ -25,27 +25,41 @@ void Camera::Init()
   V = (V - V.project(N)).normalize();
   N = N.normalize();
   U = N.cross(V).normalize();
+
+  transition_matrix = mat3(U, V, N);
 }
 
 Camera::~Camera()
 {
 }
 
-mat4 Camera::GetViewMatrix() const
+vec3 Camera::ToView(vec3 const &v) const
 {
-  point c = C * -1;
-  return mat4(U.x, V.x, N.x, 0,
-              U.y, V.y, N.y, 0,
-              U.z, V.z, N.z, 0,
-              c.x, c.y, c.z, 1);
+  vec3 w = v - C;
+  return transition_matrix * w;
 }
 
-mat4 Camera::GetPerspectiveMatrix() const
+vec3 Camera::ToPerspective(vec3 const &v) const
 {
-  return mat4(dhx, 0, 0, 0,
-              0, dhy, 0, 0,
-              0, 0, 1, 0,
-              0, 0, 0, 0);
+  return vec3(
+      dhx * (v.x / v.z),
+      dhy * (v.y / v.z),
+      v.z);
+}
+
+vec3 Camera::ToScreen(vec3 const &v) const
+{
+  vec3 w(
+      ((v.x + 1) * width / 2) + 0.5,
+      height - ((v.y + 1) * (height / 2)) + 0.5,
+      v.z);
+  return w.floor();
+}
+
+void Camera::SetSize(int w, int h)
+{
+  width = w;
+  height = h;
 }
 
 // Parser for camera.txt
@@ -106,8 +120,8 @@ Camera *Camera::FromFile(std::string const &filename)
 std::ostream &operator<<(std::ostream &os, Camera const &c)
 {
   os << "Camera: " << std::endl;
-  os << "N: " << c.N << std::endl;
-  os << "V: " << c.V << std::endl;
+  os << "T: " << std::endl
+     << c.transition_matrix << std::endl;
   os << "C: " << c.C << std::endl;
   os << "d: " << c.d << std::endl;
   os << "hx: " << c.hx << std::endl;

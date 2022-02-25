@@ -114,6 +114,11 @@ vec3 vec3::project(vec3 const &v) const
   return v * (dot(v) / v.dot(v));
 }
 
+vec3 vec3::floor() const
+{
+  return vec3(floorf(x), floorf(y), floorf(z));
+}
+
 // Setters
 void vec3::set(float x, float y, float z)
 {

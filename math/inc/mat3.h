@@ -12,6 +12,7 @@ public:
   mat3(float m00, float m10, float m20,
        float m01, float m11, float m21,
        float m02, float m12, float m22);
+  mat3(vec3 const &u, vec3 const &v, vec3 const &w);
   mat3(float mi);
   ~mat3();
 

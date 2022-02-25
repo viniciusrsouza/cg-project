@@ -24,6 +24,7 @@ public:
   // vec3 functions
   vec3 cross(vec3 const &v) const;
   float dot(vec3 const &v) const;
+  vec3 floor() const;
 
   vec3 normalize() const;
   float length() const;

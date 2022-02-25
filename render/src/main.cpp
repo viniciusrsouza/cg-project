@@ -60,7 +60,9 @@ public:
     File *file = new File("assets/triangulo.byu");
     file->Load();
     Camera *c = Camera::FromFile("assets/camera.txt");
-
+    c->SetSize(
+        GetSize().GetWidth(),
+        GetSize().GetHeight());
     context->Load(file->vertices, file->vertexCount, file->indices, file->triangleCount);
     context->SetCamera(c);
     context->UseShader(new BasicShader());
@@ -83,7 +85,7 @@ IMPLEMENT_APP(MyApp)
 bool MyApp::OnInit()
 {
   wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
-  frame = new wxFrame((wxFrame *)NULL, -1, wxT("Hello wxDC"), wxPoint(50, 50), wxSize(800, 600));
+  frame = new wxFrame((wxFrame *)NULL, -1, wxT("Hello wxDC"), wxPoint(50, 50), wxSize(500, 500));
 
   drawPane = new MyPane((wxFrame *)frame);
   sizer->Add(drawPane, 1, wxEXPAND);

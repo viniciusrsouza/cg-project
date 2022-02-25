@@ -4,16 +4,14 @@
 Shader::Shader() {}
 Shader::~Shader() {}
 
-void Shader::Load(mat4 const &view, mat4 const &perspective, mat4 const &screen)
+void Shader::Load(Camera *c)
 {
-  std::cout << "loaded" << std::endl;
-  this->view = mat4(view);
-  this->perspective = mat4(perspective);
-  this->screen = mat4(screen);
+  camera = c;
 }
-vec4 Shader::Vertex(vec3 const &in)
+
+vec3 Shader::Vertex(vec3 const &in)
 {
-  return vec4(in, 1.0f);
+  return in;
 }
 
 vec3 Shader::Fragment()
