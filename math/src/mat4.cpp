@@ -21,24 +21,18 @@ inline void _multiply_4_4(const float *m1, const float *m2, mat4 *dest)
 
 inline float _determinant_4_4(const float *m)
 {
-  std::cout << "determinant" << std::endl;
-  std::cout << "first submatrix" << std::endl;
   mat3 sm1 = mat3(m[5], m[6], m[7],
                   m[9], m[10], m[11],
                   m[13], m[14], m[15]);
-  std::cout << "second submatrix" << std::endl;
   mat3 sm2 = mat3(m[4], m[6], m[7],
                   m[8], m[10], m[11],
                   m[12], m[14], m[15]);
-  std::cout << "third submatrix" << std::endl;
   mat3 sm3 = mat3(m[4], m[5], m[7],
                   m[8], m[9], m[11],
                   m[12], m[13], m[15]);
-  std::cout << "fourth submatrix" << std::endl;
   mat3 sm4 = mat3(m[4], m[5], m[6],
                   m[8], m[9], m[10],
                   m[12], m[13], m[14]);
-  std::cout << "multiplying" << std::endl;
   return m[0] * sm1.determinant() -
          m[1] * sm2.determinant() +
          m[2] * sm3.determinant() -

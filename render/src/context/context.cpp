@@ -48,7 +48,6 @@ void Context::Render(uint8_t *buffer, int size)
     return;
 
   shader->Load(camera);
-  std::cout << *camera << std::endl;
 
   vec4 *t_vertices = new vec4[num_vertices];
 
