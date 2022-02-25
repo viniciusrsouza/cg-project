@@ -10,7 +10,7 @@ public:
   Context();
   ~Context();
 
-  void Render(uint8_t *buffer, int size);
+  void Render(uint8_t *buffer, int w, int h);
 
   void Load(vec3 *vertices, int num_vertices, int *triangles, int num_triangles);
   void SetCamera(Camera *c);

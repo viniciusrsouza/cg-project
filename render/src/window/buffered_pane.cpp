@@ -115,7 +115,8 @@ void BaseBufferedPane::PerformPaint(wxDC &dc)
 {
   if (!resizing)
   {
-    Render(backBuffer, GetBufferSize());
+    auto size = GetSize();
+    Render(backBuffer, size.GetWidth(), size.GetHeight());
     SwapBuffers();
   }
 
@@ -129,8 +130,9 @@ void BaseBufferedPane::PerformPaint(wxDC &dc)
  * Debug implementation of virtual function. Derived class
  * should override this method to draw the contents of the window.
  */
-void BaseBufferedPane::Render(uint8_t *buffer, int size)
+void BaseBufferedPane::Render(uint8_t *buffer, int w, int h)
 {
+  int size = w * h * 3;
   for (int i = 0; i < size; i += 3)
   {
     uint8_t color = 0xff * i / size;

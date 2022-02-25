@@ -1,4 +1,5 @@
 #include <context/context.h>
+#include <context/render.h>
 #include <iostream>
 
 Context::Context()
@@ -40,8 +41,9 @@ void Context::UseShader(Shader *s)
   shader = s;
 }
 
-void Context::Render(uint8_t *buffer, int size)
+void Context::Render(uint8_t *buffer, int w, int h)
 {
+  int size = w * h * 3;
   // clear buffer
   memset(buffer, 0, size);
   if (shader == nullptr)
@@ -49,11 +51,20 @@ void Context::Render(uint8_t *buffer, int size)
 
   shader->Load(camera);
 
-  vec4 *t_vertices = new vec4[num_vertices];
+  vec3 *t_vertices = new vec3[num_vertices];
 
   for (int i = 0; i < num_vertices; i++)
-  {
     t_vertices[i] = shader->Vertex(vertices[i]);
-    // std::cout << "Vertex " << i << ": " << t_vertices[i] << std::endl;
+
+  for (int i = 0; i < num_triangles * 3; i += 3)
+  {
+    int ai = triangles[i] - 1;
+    int bi = triangles[i + 1] - 1;
+    int ci = triangles[i + 2] - 1;
+    vec3 a = t_vertices[ai];
+    vec3 b = t_vertices[bi];
+    vec3 c = t_vertices[ci];
+
+    Scanline(a, b, c, buffer, w, h, *shader);
   }
 }

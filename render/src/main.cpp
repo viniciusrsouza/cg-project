@@ -30,12 +30,12 @@ class MyPane : public BaseBufferedPane
 public:
   Context *context = nullptr;
   MyPane(wxFrame *parent) : BaseBufferedPane(parent) {}
-  void Render(uint8_t *buffer, int size) override
+  void Render(uint8_t *buffer, int w, int h) override
   {
     if (context == nullptr)
       return;
     std::cout << "Render" << std::endl;
-    context->Render(buffer, size);
+    context->Render(buffer, w, h);
   }
 
   void KeyDown(int key) override
@@ -57,8 +57,9 @@ public:
     delete context;
     context = new Context();
 
-    File *file = new File("assets/triangulo.byu");
+    File *file = new File("assets/vaso.byu");
     file->Load();
+
     Camera *c = Camera::FromFile("assets/camera.txt");
     c->SetSize(
         GetSize().GetWidth(),

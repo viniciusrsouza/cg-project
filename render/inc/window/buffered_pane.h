@@ -16,7 +16,7 @@ public:
   void KeyDownEvent(wxKeyEvent &evt);
   void PaintNow();
 
-  virtual void Render(uint8_t *buffer, int size);
+  virtual void Render(uint8_t *buffer, int w, int h);
   virtual void KeyDown(int key);
 
   // some useful events

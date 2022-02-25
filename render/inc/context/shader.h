@@ -11,8 +11,8 @@ public:
 
   void Load(Camera *c);
 
-  virtual vec3 Vertex(vec3 const &in);
-  virtual vec3 Fragment();
+  virtual vec3 Vertex(vec3 const &in) const;
+  virtual vec3 Fragment() const;
 
   Camera *camera;
 };
