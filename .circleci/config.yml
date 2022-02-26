@@ -1,0 +1,27 @@
+defaults: &defaults
+  working_directory: ~/repo
+  docker: 
+    - image: cimg/base:2020.01
+
+version: 2
+jobs:
+  deploy_main:
+    <<: *defaults
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: sudo apt-get update && sudo apt-get install -y python-dev
+      - run: sudo apt update && sudo apt install python-pip
+      - run: sudo pip install awscli --upgrade
+      - run: aws s3 sync web/public/ s3://$S3_BUCKET --delete --cache-control "public, max-age=604800"
+      - run: aws cloudfront create-invalidation --paths '/*' --distribution-id $AWS_DISTRIBUTION_ID
+
+workflows:
+  version: 2
+  main_workflow:
+    jobs:
+      - deploy_main:
+          filters:
+            branches:
+              only:
+                - main
