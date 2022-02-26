@@ -43,7 +43,7 @@ void Context::UseShader(Shader *s)
 
 void Context::Render(uint8_t *buffer, int w, int h)
 {
-  int size = w * h * 3;
+  int size = w * h * 4;
   // clear buffer
   memset(buffer, 0, size);
   if (shader == nullptr)
