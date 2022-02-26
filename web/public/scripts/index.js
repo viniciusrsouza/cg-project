@@ -10,7 +10,7 @@ const files = [
 ];
 
 Module.onRuntimeInitialized = () => {
-  const asset = files[5];
+  const asset = files[0];
   load_assets().then(() => run_c_render(asset));
 };
 
@@ -63,3 +63,18 @@ async function run_c_render(asset) {
   imageData.data.set(array);
   ctx.putImageData(imageData, 0, 0);
 }
+
+window.onload = () => {
+  const selection = document.getElementById("file-select");
+  const fileOptions = files.map((file) => {
+    const option = document.createElement("option");
+    option.text = file;
+    option.value = file;
+    return option;
+  });
+  fileOptions.forEach((option) => selection.add(option));
+  selection.onchange = () => {
+    const asset = selection.value;
+    run_c_render(asset);
+  };
+};

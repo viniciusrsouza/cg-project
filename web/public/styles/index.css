@@ -2,11 +2,95 @@
   height: 100vh;
   width: 100vw;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 #root canvas {
   background-color: black;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.select-container {
+  align-self: flex-end;
+}
+
+.select-container select {
+  width: 12rem;
+  height: 2.5rem;
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.15);
+  padding: 0.25rem;
+  margin: 0.5rem 0;
+}
+
+.canvas-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-options {
+  display: grid;
+  background-color: #fefefe;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: 1rem;
+  grid-gap: 0 1rem;
+  box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.25),
+    0 0.5rem 0.5rem rgba(0, 0, 0, 0.15);
+  border: 1px solid #efefef;
+  border-radius: 0.25rem;
+  align-self: flex-start;
+  margin-right: 2rem;
+}
+
+.camera-options > * {
+  grid-row: span 2;
+}
+
+.camera-label {
+  grid-column: span 3;
+  align-self: center;
+}
+
+.camera-label.short {
+  grid-column: span 1;
+}
+
+.camera-options input {
+  width: 6rem;
+}
+
+.apply-btn {
+  display: block;
+  grid-column: span 3;
+  grid-row: span 3;
+  margin-top: 1rem;
+  background-color: #fcba03;
+  outline: none;
+  border: none;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.15);
+  font-weight: bold;
+  cursor: pointer;
+
+  transition: all 300ms ease-in-out;
+}
+
+.apply-btn:hover {
+  background-color: #f9a600;
+}
+
+.apply-btn:active {
+  background-color: #f78d00;
+  box-shadow: 0 0.15rem 0.15rem rgba(0, 0, 0, 0.15);
 }

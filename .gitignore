@@ -3,3 +3,7 @@ build
 em-build
 */em-build
 */build
+
+# macos
+**/.DS_Store
+.DS_Store

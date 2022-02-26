@@ -2,12 +2,52 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./styles/resets.css" />
     <link rel="stylesheet" href="./styles/index.css" />
     <title>CG Project</title>
   </head>
   <body>
     <div id="root">
-      <canvas id="canvas" height="400" width="400"></canvas>
+      <div class="container">
+        <div class="select-container">
+          <select id="file-select"></select>
+        </div>
+        <div class="canvas-container">
+          <fieldset class="camera-options">
+            <label class="camera-label">Camera:</label>
+
+            <!-- N -->
+            <label class="camera-label">N:</label>
+            <input type="number" />
+            <input type="number" />
+            <input type="number" />
+
+            <!-- V -->
+            <label class="camera-label">V:</label>
+            <input type="number" />
+            <input type="number" />
+            <input type="number" />
+
+            <!-- C -->
+            <label class="camera-label">C:</label>
+            <input type="number" />
+            <input type="number" />
+            <input type="number" />
+
+            <!-- d hx hy -->
+            <label class="camera-label short">d:</label>
+            <label class="camera-label short">hx:</label>
+            <label class="camera-label short">hy:</label>
+            <input type="number" />
+            <input type="number" />
+            <input type="number" />
+
+            <!-- apply -->
+            <button class="apply-btn">Apply</button>
+          </fieldset>
+          <canvas id="canvas" height="400" width="400"></canvas>
+        </div>
+      </div>
     </div>
   </body>
   <script type="text/javascript" src="./dist/cglib.js"></script>
