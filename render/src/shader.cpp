@@ -16,5 +16,5 @@ vec3 Shader::Vertex(vec3 const &in) const
 
 vec3 Shader::Fragment() const
 {
-  return vec3(0xff, 0xff, 0xff);
+  return vec3(1.0f, 1.0f, 1.0f);
 }

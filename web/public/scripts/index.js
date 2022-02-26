@@ -10,7 +10,7 @@ const files = [
 ];
 
 Module.onRuntimeInitialized = () => {
-  const asset = files[0];
+  const asset = files[4];
   load_assets().then(() => run_c_render(asset));
 };
 
@@ -91,6 +91,7 @@ window.onload = () => {
     return option;
   });
   fileOptions.forEach((option) => selection.add(option));
+  fileOptions[4].selected = true;
   selection.onchange = () => {
     const asset = selection.value;
     run_c_render(asset);

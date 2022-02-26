@@ -2,22 +2,19 @@
 #include <math.h>
 #include <iostream>
 
-void PaintUpper(
-    vec3 const &a,
-    vec3 const &b,
-    vec3 const &c,
-    uint8_t *buffer,
-    int w, int h,
-    Shader const &shader);
-void PaintLower(
-    vec3 const &a,
-    vec3 const &b,
-    vec3 const &c,
-    uint8_t *buffer,
-    int w, int h,
-    Shader const &shader);
+int *zbuffer;
 
-void sorted(vec3 *vs);
+void BeginScanline(int w, int h)
+{
+  zbuffer = (int *)malloc(w * h * sizeof(int));
+  memset(zbuffer, -1, w * h * sizeof(int));
+}
+void EndScanline()
+{
+  free(zbuffer);
+}
+
+float area = 0.0f;
 
 void Scanline(vec3 const &_a,
               vec3 const &_b,
@@ -27,7 +24,7 @@ void Scanline(vec3 const &_a,
               Shader const &shader)
 {
   vec3 vs[3] = {_a, _b, _c};
-  sorted(vs);
+  Sorted(vs);
   vec3 a = vs[0];
   vec3 b = vs[1];
   vec3 c = vs[2];
@@ -71,16 +68,13 @@ void PaintUpper(
   float x_min = a.x;
   float x_max = a.x;
 
+  area = Triangle::Area(a, b, c);
   for (int y = a.y; y < b.y; y++)
   {
     for (int x = x_min; x < x_max; x++)
     {
       int i = (y * w + x) * 4;
-      vec3 color = shader.Fragment();
-      buffer[i] = 0xff;
-      buffer[i + 1] = 0xff;
-      buffer[i + 2] = 0xff;
-      buffer[i + 3] = 0xff;
+      PaintPixel(a, b, c, buffer, w, h, x, y, shader);
     }
     x_min += a_min;
     x_max += a_max;
@@ -109,23 +103,20 @@ void PaintLower(
   float x_min = c.x;
   float x_max = c.x;
 
+  area = Triangle::Area(a, b, c);
   for (int y = c.y; y > a.y - 1; y--)
   {
     for (int x = x_min; x < x_max; x++)
     {
       int i = (y * w + x) * 4;
-      vec3 color = shader.Fragment();
-      buffer[i] = 0xff;
-      buffer[i + 1] = 0xff;
-      buffer[i + 2] = 0xff;
-      buffer[i + 3] = 0xff;
+      PaintPixel(a, b, c, buffer, w, h, x, y, shader);
     }
     x_min -= a_min;
     x_max -= a_max;
   }
 }
 
-void sorted(vec3 *vs)
+void Sorted(vec3 *vs)
 {
   if (vs[0].y > vs[2].y)
   {
@@ -145,4 +136,25 @@ void sorted(vec3 *vs)
     vs[1] = vs[2];
     vs[2] = tmp;
   }
+}
+
+void PaintPixel(vec3 const &a,
+                vec3 const &b,
+                vec3 const &c,
+                uint8_t *buffer,
+                int w, int h, int x, int y,
+                Shader const &shader)
+{
+  int i = (y * w + x) * 4;
+
+  vec3 p = Triangle::PointAt(a, b, c, x, y, area);
+  if (zbuffer[y * w + x] > p.z)
+    return;
+  zbuffer[y * w + x] = p.z;
+
+  vec3 color = shader.Fragment();
+  buffer[i] = 0xff;
+  buffer[i + 1] = 0xff;
+  buffer[i + 2] = 0xff;
+  buffer[i + 3] = 0xff;
 }

@@ -15,6 +15,7 @@ add_library(
   src/vec4.cpp
   src/mat3.cpp
   src/mat4.cpp
+  src/triangle.cpp
 )
 
 target_include_directories(mathlib PUBLIC inc)

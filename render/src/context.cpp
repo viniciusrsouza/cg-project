@@ -56,6 +56,7 @@ void Context::Render(uint8_t *buffer, int w, int h)
   for (int i = 0; i < num_vertices; i++)
     t_vertices[i] = shader->Vertex(vertices[i]);
 
+  BeginScanline(w, h);
   for (int i = 0; i < num_triangles * 3; i += 3)
   {
     int ai = triangles[i] - 1;
@@ -67,4 +68,5 @@ void Context::Render(uint8_t *buffer, int w, int h)
 
     Scanline(a, b, c, buffer, w, h, *shader);
   }
+  EndScanline();
 }
