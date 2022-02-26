@@ -19,7 +19,7 @@ The web server will start listening at `localhost:3000` by default
 
 ## Build project
 
-The rendering algorithm is made in C++ and compiled to WebAssembly to run in the browser. Inside the web folder there is already a pre-compiled version of the code, but if you want to try and compile yourself, follow the next steps.
+The rendering algorithm is made in C++ and compiled to WebAssembly to run in the browser. Inside the web folder there is already a pre-compiled version of the code, but if you want to try and compile it yourself, follow the next steps.
 
 ### Requirementes
 
@@ -37,4 +37,4 @@ emcmake cmake ..
 emmake make
 ```
 
-The commands above will build and copy the `wasm` files and the javascript wrappers into the `/web/public/dist/` folder, after that you can follow the steps to run the project.
+The commands above will build and copy the `wasm` file and the javascript wrappers into the `/web/public/dist/` folder, after that you can follow the steps to run the project.
