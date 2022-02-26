@@ -18,32 +18,32 @@
 
             <!-- N -->
             <label class="camera-label">N:</label>
-            <input type="number" />
-            <input type="number" />
-            <input type="number" />
+            <input type="number" id="n_x" value="0" />
+            <input type="number" id="n_y" value="1" />
+            <input type="number" id="n_z" value="-1" />
 
             <!-- V -->
             <label class="camera-label">V:</label>
-            <input type="number" />
-            <input type="number" />
-            <input type="number" />
+            <input type="number" id="v_x" value="0" />
+            <input type="number" id="v_y" value="-1" />
+            <input type="number" id="v_z" value="-1" />
 
             <!-- C -->
             <label class="camera-label">C:</label>
-            <input type="number" />
-            <input type="number" />
-            <input type="number" />
+            <input type="number" id="c_x" value="0" />
+            <input type="number" id="c_y" value="-500" />
+            <input type="number" id="c_z" value="500" />
 
             <!-- d hx hy -->
             <label class="camera-label short">d:</label>
             <label class="camera-label short">hx:</label>
             <label class="camera-label short">hy:</label>
-            <input type="number" />
-            <input type="number" />
-            <input type="number" />
+            <input type="number" id="d" value="5" />
+            <input type="number" id="hx" value="2" />
+            <input type="number" id="hy" value="2" />
 
             <!-- apply -->
-            <button class="apply-btn">Apply</button>
+            <button class="apply-btn" id="cam-btn">Apply</button>
           </fieldset>
           <canvas id="canvas" height="400" width="400"></canvas>
         </div>

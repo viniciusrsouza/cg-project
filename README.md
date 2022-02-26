@@ -1,28 +1,40 @@
 # CG Project - Render 3D Objects from scratch
 
-## Build Instructions
-### Clone and initialize repository
+## Run Instructions
+
+### Requirements
+
+- node@16.14.0
+
+### Steps
+
 ```bash
 git clone git@github.com:viniciusrsouza/cg-project.git
-cd cg-project
-git submodule update --init --recursive
+cd cg-project/web
+npm install
+npm start
 ```
 
-### Build project
+The web server will start listening at `localhost:3000` by default
+
+## Build project
+
+The rendering algorithm is made in C++ and compiled to WebAssembly to run in the browser. Inside the web folder there is already a pre-compiled version of the code, but if you want to try and compile yourself, follow the next steps.
+
+### Requirementes
+
+The project might build with versions older than the specified, but those were the versions used during development
+
+- [Emscripten@3.1.6](https://emscripten.org)
+- [CMake@3.22.0](https://cmake.org)
+
+### Steps
+
 ```bash
-mkdir build # to avoid poluting the root folder
-cd build
-cmake ..
-make
+mkdir em-build
+cd em-build
+emcmake cmake ..
+emmake make
 ```
 
-The commands above should produce a `cg` executable file inside the build folder.
-
-### Optional
-You can try to increase the amount of jobs (threads) used by make when compiling the source by adding a flag to the command.
-
-```bash
-make -j 16 # or the number of jobs you want
-```
-
-If building with this flag fails, try building without it. Parallel build might cause issues depending on the order the files are built.
+The commands above will build and copy the `wasm` files and the javascript wrappers into the `/web/public/dist/` folder, after that you can follow the steps to run the project.

@@ -50,7 +50,7 @@ async function run_c_render(asset) {
   ]);
 
   const asset_ptr = Module.allocateUTF8(`/tmp/${asset}`);
-  const camera = new Float32Array([0, 1, -1, 0, -1, -1, 5, 2, 2, 0, -500, 500]);
+  const camera = get_camera_values();
   const camera_ptr = farrayToPtr(camera);
   const w = 400;
   const h = 400;
@@ -64,6 +64,24 @@ async function run_c_render(asset) {
   ctx.putImageData(imageData, 0, 0);
 }
 
+function get_vector_inputs(vector) {
+  const vec_x = document.getElementById(`${vector}_x`).value;
+  const vec_y = document.getElementById(`${vector}_y`).value;
+  const vec_z = document.getElementById(`${vector}_z`).value;
+  return [parseFloat(vec_x), parseFloat(vec_y), parseFloat(vec_z)];
+}
+
+function get_camera_values() {
+  const [nx, ny, nz] = get_vector_inputs("n");
+  const [vx, vy, vz] = get_vector_inputs("v");
+  const [cx, cy, cz] = get_vector_inputs("c");
+  const d = parseFloat(document.getElementById("d").value);
+  const hx = parseFloat(document.getElementById("hx").value);
+  const hy = parseFloat(document.getElementById("hy").value);
+  const camera_array = [nx, ny, nz, vx, vy, vz, d, hx, hy, cx, cy, cz];
+  return new Float32Array(camera_array);
+}
+
 window.onload = () => {
   const selection = document.getElementById("file-select");
   const fileOptions = files.map((file) => {
@@ -74,6 +92,12 @@ window.onload = () => {
   });
   fileOptions.forEach((option) => selection.add(option));
   selection.onchange = () => {
+    const asset = selection.value;
+    run_c_render(asset);
+  };
+
+  const apply_btn = document.getElementById("cam-btn");
+  apply_btn.onclick = () => {
     const asset = selection.value;
     run_c_render(asset);
   };

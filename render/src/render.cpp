@@ -77,10 +77,9 @@ void PaintUpper(
     {
       int i = (y * w + x) * 4;
       vec3 color = shader.Fragment();
-      // #4287f5
-      buffer[i] = 0x42;
-      buffer[i + 1] = 0x87;
-      buffer[i + 2] = 0xf5;
+      buffer[i] = 0xff;
+      buffer[i + 1] = 0xff;
+      buffer[i + 2] = 0xff;
       buffer[i + 3] = 0xff;
     }
     x_min += a_min;
@@ -116,9 +115,9 @@ void PaintLower(
     {
       int i = (y * w + x) * 4;
       vec3 color = shader.Fragment();
-      buffer[i] = 0x42;
-      buffer[i + 1] = 0x87;
-      buffer[i + 2] = 0xf5;
+      buffer[i] = 0xff;
+      buffer[i + 1] = 0xff;
+      buffer[i + 2] = 0xff;
       buffer[i + 3] = 0xff;
     }
     x_min -= a_min;
