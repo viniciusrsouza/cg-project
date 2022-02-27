@@ -2,7 +2,6 @@
 
 #include <mathlib.h>
 #include "camera.h"
-#include "shader.h"
 
 class Context
 {
@@ -14,7 +13,7 @@ public:
 
   void Load(vec3 *vertices, int num_vertices, int *triangles, int num_triangles);
   void SetCamera(Camera *c);
-  void UseShader(Shader *s);
+  vec3 TransformVertex(vec3 const &in) const;
 
 private:
   vec3 *vertices;
@@ -22,5 +21,4 @@ private:
   int *triangles;
   int num_triangles;
   Camera *camera;
-  Shader *shader;
 };

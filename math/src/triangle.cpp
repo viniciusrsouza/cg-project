@@ -27,3 +27,10 @@ float Triangle::Area(vec3 const &a, vec3 const &b, vec3 const &c)
   float s = (ab + ac + bc) / 2.0f;
   return sqrt(s * (s - ab) * (s - ac) * (s - bc));
 }
+
+vec3 Triangle::Normal(vec3 const &a, vec3 const &b, vec3 const &c)
+{
+  vec3 ab = b - a;
+  vec3 ac = c - a;
+  return ab.cross(ac);
+}

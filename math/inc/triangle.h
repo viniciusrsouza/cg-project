@@ -7,4 +7,5 @@ namespace Triangle
   vec3 PointAt(
       vec3 const &a, vec3 const &b, vec3 const &c,
       float x, float y, float area);
+  vec3 Normal(vec3 const &a, vec3 const &b, vec3 const &c);
 }

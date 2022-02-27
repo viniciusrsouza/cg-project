@@ -7,7 +7,6 @@ Context::Context()
   vertices = nullptr;
   triangles = nullptr;
   camera = nullptr;
-  shader = nullptr;
 }
 
 Context::~Context()
@@ -19,8 +18,6 @@ Context::~Context()
 
   if (camera != nullptr)
     delete camera;
-  if (shader != nullptr)
-    delete shader;
 }
 
 void Context::Load(vec3 *vertices, int num_vertices, int *triangles, int num_triangles)
@@ -36,9 +33,12 @@ void Context::SetCamera(Camera *c)
   camera = c;
 }
 
-void Context::UseShader(Shader *s)
+vec3 Context::TransformVertex(vec3 const &in) const
 {
-  shader = s;
+  vec3 v = camera->ToView(in);
+  v = camera->ToPerspective(v);
+  v = camera->ToScreen(v);
+  return v;
 }
 
 void Context::Render(uint8_t *buffer, int w, int h)
@@ -46,17 +46,13 @@ void Context::Render(uint8_t *buffer, int w, int h)
   int size = w * h * 4;
   // clear buffer
   memset(buffer, 0, size);
-  if (shader == nullptr)
-    return;
-
-  shader->Load(camera);
 
   vec3 *t_vertices = new vec3[num_vertices];
 
   for (int i = 0; i < num_vertices; i++)
-    t_vertices[i] = shader->Vertex(vertices[i]);
+    t_vertices[i] = TransformVertex(vertices[i]);
 
-  BeginScanline(w, h);
+  BeginScanline(w, h, buffer);
   for (int i = 0; i < num_triangles * 3; i += 3)
   {
     int ai = triangles[i] - 1;
@@ -66,7 +62,7 @@ void Context::Render(uint8_t *buffer, int w, int h)
     vec3 b = t_vertices[bi];
     vec3 c = t_vertices[ci];
 
-    Scanline(a, b, c, buffer, w, h, *shader);
+    Scanline(a, b, c);
   }
   EndScanline();
 }

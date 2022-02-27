@@ -1,7 +1,6 @@
 #include <entry.h>
 #include <context.h>
 #include <camera.h>
-#include <shaders/basic_shader.h>
 
 #include <filelib.h>
 #include <mathlib.h>
@@ -30,7 +29,6 @@ int render(
   c->SetSize(w, h);
   ctx->SetCamera(c);
   ctx->Load(file->vertices, file->vertexCount, file->indices, file->triangleCount);
-  ctx->UseShader(new BasicShader());
   ctx->Render((uint8_t *)buffer, w, h);
   return 0;
 }
