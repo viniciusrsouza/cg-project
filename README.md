@@ -1,5 +1,12 @@
 # CG Project - Render 3D Objects from scratch
 
+## Modules
+
+- `file`: utility functions to handle parsing of byu files.
+- `math`: linear algebra library implementing vector and matrix operations.
+- `render`: library entrypoint that uses the other modules to implement the scanline conversion algorithm.
+- `web`: web application that uses the c++ library to render the objects into a canvas.
+
 ## Run Instructions
 
 ### Requirements
